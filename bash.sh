@@ -3,8 +3,16 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 enable_monitor_mode(){
-    sudo airmon-ng check kill
-    sudo airmon-ng start "$1"
+    iface="$1"
+    mode=$(iwconfig "$iface" 2>/dev/null | grep -i "Mode:Monitor")
+    if [ -n "$mode" ]; then
+        echo "[✓] Interface $iface is already in Monitor mode"
+    else
+        echo "[*] Enabling Monitor mode on $iface..."
+        sudo airmon-ng check kill
+        sudo airmon-ng start "$iface"
+        echo "[✓] Done"
+    fi
 }
 check_root() {
     if [[ $EUID -ne 0 ]]; then
