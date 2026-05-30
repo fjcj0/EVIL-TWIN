@@ -63,7 +63,6 @@ scan_networks() {
     sleep 15
     kill $AIRODUMP_PID 2>/dev/null
     wait $AIRODUMP_PID 2>/dev/null
-    
     echo -e "\n${GREEN}[*] Available networks (BSSID - ESSID):${NC}"
     echo "=========================================="
     if [ -f "/tmp/scan-01.csv" ]; then
